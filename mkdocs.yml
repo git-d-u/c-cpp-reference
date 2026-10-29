@@ -1,0 +1,129 @@
+site_name: C / C++ 基本リファレンス
+site_description: C言語・C++・アセンブラ・SQL・HTML・PHP・JavaScript・Python・PowerShell・Linux・Windows の基本リファレンス
+site_url: https://git-d-u.github.io/c-cpp-reference/
+repo_url: https://github.com/git-d-u/c-cpp-reference
+repo_name: git-d-u/c-cpp-reference
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  custom_dir: overrides  # 全ページに noindex を入れるためのテンプレート上書き
+  language: ja
+  palette:
+    # OS の設定に合わせてライト/ダークを切り替え
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/weather-night
+        name: ダークモードに切り替え
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/weather-sunny
+        name: ライトモードに切り替え
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tabs          # 上部に C / C++ / アセンブラ / SQL / HTML / PHP / JavaScript / Python / PowerShell / Linux / Windows / 付録 のタブ
+    - navigation.sections
+    - navigation.footer        # ページ下部に前後ページへのリンク
+    - navigation.top           # 「トップへ戻る」ボタン
+    - navigation.instant
+    - navigation.tracking
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy        # コードブロックのコピーボタン
+
+plugins:
+  - search:
+      lang: ja
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+      # 日本語の見出しでもアンカーが GitHub と同じ形式になるようにする
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+
+# HTML の例で、コードの横に表示結果を出すための CSS と JavaScript
+extra_css:
+  - stylesheets/html-demo.css
+extra_javascript:
+  - javascripts/html-demo.js
+
+nav:
+  - ホーム: index.md
+  - C言語:
+      - 1. 基本文法とデータ型: c/01-basics.md
+      - 2. 制御構文: c/02-control-flow.md
+      - 3. 関数: c/03-functions.md
+      - 4. 配列・ポインタ・文字列: c/04-pointers-arrays.md
+      - 5. 構造体・共用体・列挙型: c/05-structs.md
+      - 6. 動的メモリ管理: c/06-memory.md
+      - 7. 標準ライブラリ: c/07-stdlib.md
+      - 8. プリプロセッサ: c/08-preprocessor.md
+  - C++:
+      - 1. C++の基本: cpp/01-basics.md
+      - 2. クラスとオブジェクト指向: cpp/02-classes.md
+      - 3. テンプレート: cpp/03-templates.md
+      - 4. STL コンテナ: cpp/04-stl-containers.md
+      - 5. STL アルゴリズム: cpp/05-stl-algorithms.md
+      - 6. メモリ管理とスマートポインタ: cpp/06-memory.md
+      - 7. モダンC++: cpp/07-modern-cpp.md
+      - 8. 例外処理: cpp/08-exceptions.md
+  - アセンブラ:
+      - 1. 基本とレジスタ・構文: asm/01-basics.md
+      - 2. 命令と読み方: asm/02-reading.md
+      - 3. つまずきポイントと解き方: asm/03-pitfalls.md
+  - SQL:
+      - 1. 基本構文: sql/01-syntax.md
+      - 2. 権限と GRANT OPTION: sql/02-grant.md
+      - 3. DB・テーブル・カラムの確認と information_schema: sql/03-metadata.md
+  - HTML:
+      - 1. 基本の構文: html/01-basics.md
+      - 2. フォームとページの骨組み: html/02-forms-layout.md
+  - PHP:
+      - 1. 構文と使い方: php/01-syntax.md
+      - 2. セキュリティ対策とやってはいけない例: php/02-security.md
+  - JavaScript:
+      - 1. 動作条件と処理の流れ: javascript/01-runtime.md
+      - 2. 構文: javascript/02-syntax.md
+      - 3. 関数の解説と使い方: javascript/03-functions.md
+      - 4. HTML・PHP との組み合わせ: javascript/04-html-php.md
+      - 5. DOM の構造と書き換えパターン: javascript/05-dom-patterns.md
+  - Python:
+      - 1. 基本構文と型の変換: python/01-basics.md
+      - 2. 便利な関数と、使わない場合の書き方: python/02-builtins.md
+  - PowerShell:
+      - 1. 版ごとの違いと基本構文: powershell/01-versions.md
+      - 2. セキュアなコーディングとダメな例: powershell/02-secure-coding.md
+      - 3. SSH・ファイル転送・リモート操作: powershell/03-remote.md
+  - Linux:
+      - 1. 標準的なディレクトリ構成: linux/01-directories.md
+      - 2. セキュリティ上重要な場所: linux/02-security.md
+      - 3. ログの場所と見方: linux/03-logs.md
+      - 4. シェルスクリプトとワンライナー: linux/04-shell-script.md
+      - 5. 標準入力・標準出力・標準エラー出力とリダイレクト: linux/05-stdio-redirect.md
+  - Windows:
+      - 1. 標準的なディレクトリ構成: windows/01-directories.md
+      - 2. セキュリティ上重要な場所: windows/02-security.md
+      - 3. ログの場所と見方: windows/03-logs.md
+  - 付録:
+      - C と C++ の違い: appendix/c-vs-cpp.md
+      - ビルドの基本: appendix/build.md
+      - 型変換の早見表: appendix/type-conversion.md

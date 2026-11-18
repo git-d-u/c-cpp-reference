@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{# 全ページに noindex を入れ、検索エンジンの検索結果に載らないようにする #}
+{% block extrahead %}
+  <meta name="robots" content="noindex, nofollow">
+{% endblock %}

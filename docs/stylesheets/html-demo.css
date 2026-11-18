@@ -1,0 +1,42 @@
+/* HTML の例：コードと表示結果を並べる（幅が狭い画面では上下に並べる） */
+.html-demo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.6rem;
+  margin: 1em 0 1.5em;
+}
+
+@media screen and (min-width: 60em) {
+  .html-demo {
+    /* minmax(0, 1fr) にすると、長い行があっても左右の幅が均等になる */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.html-demo > .highlight,
+.html-demo pre {
+  margin: 0;
+}
+
+.html-demo__result {
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.2rem;
+  overflow: hidden;
+  background: #fff;
+}
+
+.html-demo__label {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.64rem;
+  color: var(--md-default-fg-color--light);
+  background: var(--md-default-fg-color--lightest);
+}
+
+.html-demo__result iframe {
+  display: block;
+  width: 100%;
+  min-height: 2.5rem;
+  border: 0;
+  background: #fff;
+}

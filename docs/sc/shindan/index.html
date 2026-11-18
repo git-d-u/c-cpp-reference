@@ -1,0 +1,340 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>科目B 得意分野診断</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a single answer-sheet column; sticky day tabs; results view as a table with bars */
+:root {
+  --bg: #f3f5f7;
+  --paper: #ffffff;
+  --ink: #18222d;
+  --muted: #5b6875;
+  --line: #d6dde4;
+  --accent: #1d5a86;
+  --accent-soft: #e3eef7;
+  --ok: #1d7a4c;
+  --ok-soft: #e2f3ea;
+  --ng: #b3362f;
+  --ng-soft: #fbe7e5;
+  --warn: #9a6400;
+  --warn-soft: #fbf0d9;
+  --font-body: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11171d; --paper: #18212a; --ink: #e4eaf0; --muted: #98a6b3; --line: #2c3946;
+  --accent: #7fb6e0; --accent-soft: #1d3446; --ok: #6cc99a; --ok-soft: #173326;
+  --ng: #f08a80; --ng-soft: #3a1f1d; --warn: #e2b55c; --warn-soft: #3a2e16; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #11171d; --paper: #18212a; --ink: #e4eaf0; --muted: #98a6b3; --line: #2c3946;
+  --accent: #7fb6e0; --accent-soft: #1d3446; --ok: #6cc99a; --ok-soft: #173326;
+  --ng: #f08a80; --ng-soft: #3a1f1d; --warn: #e2b55c; --warn-soft: #3a2e16; color-scheme: dark; }
+
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.75; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+.wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.top { background: var(--paper); border-bottom: 1px solid var(--line); }
+header.top .wrap { padding-block: 22px 14px; display: grid; gap: 6px; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; color: var(--muted); }
+h1 { margin: 0; font-size: 24px; line-height: 1.35; text-wrap: balance; }
+.lead { margin: 0; color: var(--muted); font-size: 14px; }
+nav.tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.tabs .wrap { display: flex; gap: 4px; overflow-x: auto; padding-block: 6px; }
+.tab { flex: 0 0 auto; font: inherit; font-size: 14px; border: 1px solid transparent; background: none; color: var(--muted); padding: 6px 12px; border-radius: 6px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); font-weight: 700; }
+.tab .score { font-family: var(--font-mono); font-size: 12px; }
+.tab:focus-visible, button:focus-visible, input:focus-visible, label.opt:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+main .wrap { padding-block: 20px 60px; display: grid; gap: 16px; }
+
+.dayhead { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; }
+.dayhead h2 { margin: 0; font-size: 20px; }
+.dayhead .meta { color: var(--muted); font-size: 13px; }
+.fieldmix { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12px; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
+
+ol.qs { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.q { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: grid; gap: 10px; min-width: 0; }
+.q.ok { border-color: var(--ok); }
+.q.ng { border-color: var(--ng); }
+.qhead { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.qno { font-family: var(--font-mono); font-weight: 700; color: var(--accent); font-size: 14px; }
+.mark { margin-left: auto; font-weight: 700; font-size: 18px; line-height: 1; }
+.q.ok .mark { color: var(--ok); } .q.ng .mark { color: var(--ng); }
+.qtext { margin: 0; overflow-wrap: anywhere; }
+.opts { display: grid; gap: 6px; }
+label.opt { display: grid; grid-template-columns: auto auto 1fr; gap: 8px; align-items: start; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; }
+label.opt input { margin-top: 6px; }
+label.opt .k { font-weight: 700; }
+label.opt.picked { border-color: var(--accent); background: var(--accent-soft); }
+label.opt.right { border-color: var(--ok); background: var(--ok-soft); }
+input[type="text"] { font: inherit; width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+.src { font-size: 12px; color: var(--muted); }
+.feedback { display: grid; gap: 6px; padding: 10px 12px; border-radius: 6px; background: var(--bg); font-size: 14px; }
+.feedback .ans { font-weight: 700; }
+.feedback .ex { color: var(--muted); }
+.override { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; font-size: 13px; color: var(--muted); }
+
+.btn { font: inherit; font-size: 14px; padding: 8px 16px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: var(--paper); cursor: pointer; font-weight: 700; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn.small { font-size: 12px; padding: 3px 10px; font-weight: 400; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.confirm { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 13px; color: var(--ng); }
+.summary { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: grid; gap: 4px; }
+.summary .big { font-family: var(--font-mono); font-size: 28px; font-weight: 700; }
+
+/* results */
+.panel { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: grid; gap: 12px; min-width: 0; }
+.panel h3 { margin: 0; font-size: 16px; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th { white-space: nowrap; font-size: 12px; color: var(--muted); font-weight: 400; letter-spacing: .04em; }
+td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bar { position: relative; height: 10px; background: var(--bg); border-radius: 5px; min-width: 90px; overflow: hidden; }
+.bar i { position: absolute; inset: 0 auto 0 0; border-radius: 5px; background: var(--accent); }
+.bar .t60, .bar .t80 { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--muted); opacity: .5; }
+.pill { font-size: 12px; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.pill.good { background: var(--ok-soft); color: var(--ok); }
+.pill.mid { background: var(--warn-soft); color: var(--warn); }
+.pill.bad { background: var(--ng-soft); color: var(--ng); }
+.pill.none { background: var(--bg); color: var(--muted); }
+.note { color: var(--muted); font-size: 13px; margin: 0; }
+textarea { font-family: var(--font-mono); font-size: 12px; width: 100%; box-sizing: border-box; min-height: 120px; padding: 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+.keylist { display: grid; gap: 8px; }
+details.keyday summary { cursor: pointer; font-weight: 700; }
+.toast { font-size: 13px; color: var(--ok); }
+@media (prefers-reduced-motion: no-preference) { .bar i { transition: width .4s ease; } }
+</style>
+
+<header class="top"><div class="wrap">
+  <div class="eyebrow">情報処理安全確保支援士　科目B対策</div>
+  <h1>科目B 得意分野診断<span id="count"></span></h1>
+  <p class="lead">8分野の一問一答です。答えは単語か記号で入力し、日ごとに採点します。採点した日が増えるほど、分野別の正答率から得意・不得意がはっきりします。回答はこのブラウザにだけ保存されます。</p>
+  <p class="note"><a href="../">← 支援士のページに戻る</a></p>
+</div></header>
+<nav class="tabs" aria-label="日の切替"><div class="wrap" id="tabs" role="tablist"></div></nav>
+<main><div class="wrap" id="view"></div></main>
+
+<script>
+(async function () {
+  let DATA;
+  try {
+    const r = await fetch("questions.json", { cache: "no-cache" });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    DATA = await r.json();
+  } catch (e) {
+    document.getElementById("view").innerHTML = '<p class="note">問題データを読み込めませんでした（' + String(e.message).replace(/[<>&]/g, "") + '）。ページを再読み込みしてください。</p>';
+    return;
+  }
+  const FIELDS = DATA.fields;
+  const FNAME = Object.fromEntries(FIELDS.map(f => [f.key, f.name]));
+  const QS = DATA.questions;
+  const DAYS = [...new Set(QS.map(q => q.day))].sort((a, b) => a - b);
+  document.getElementById("count").textContent = `　${QS.length}問（${DAYS.length}日分）`;
+  const KANA = ["ア", "イ", "ウ", "エ"];
+  const KEY = "kamokuB-shindan-v1";
+
+  let state = { answers: {}, graded: {}, override: {} };
+  try { const s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s && s.answers) state = Object.assign(state, s); } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  function norm(s) {
+    return String(s || "").normalize("NFKC").toLowerCase()
+      .replace(/[\s　・･()（）「」『』"'`、。,.\-‐－–—_:：]/g, "");
+  }
+  function autoCorrect(q, ans) {
+    if (ans == null || ans === "") return false;
+    if (q.c) return ans === q.a;
+    const n = norm(ans);
+    return q.acc.some(a => norm(a) === n);
+  }
+  function isCorrect(q) {
+    if (q.id in state.override) return state.override[q.id];
+    return autoCorrect(q, state.answers[q.id]);
+  }
+  function dayQs(d) { return QS.filter(q => q.day === d); }
+  function dayScore(d) { const qs = dayQs(d); return qs.filter(isCorrect).length; }
+
+  const tabsEl = document.getElementById("tabs");
+  const view = document.getElementById("view");
+  let current = "day1";
+
+  function renderTabs() {
+    const items = DAYS.map(d => {
+      const sc = state.graded[d] ? `<span class="score">${dayScore(d)}/${dayQs(d).length}</span>` : "";
+      return `<button class="tab" role="tab" id="tab-day${d}" aria-selected="${current === "day" + d}" data-v="day${d}">${d}日目${sc}</button>`;
+    });
+    items.push(`<button class="tab" role="tab" id="tab-result" aria-selected="${current === "result"}" data-v="result">診断結果</button>`);
+    items.push(`<button class="tab" role="tab" id="tab-key" aria-selected="${current === "key"}" data-v="key">解答一覧</button>`);
+    tabsEl.innerHTML = items.join("");
+  }
+  tabsEl.addEventListener("click", e => {
+    const b = e.target.closest(".tab"); if (!b) return;
+    go(b.dataset.v);
+  });
+  function go(v) {
+    current = v;
+    try { history.replaceState(null, "", "#" + v); } catch (e) { location.hash = v; }
+    render(); window.scrollTo(0, 0);
+  }
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+  function renderDay(d) {
+    const qs = dayQs(d);
+    const graded = !!state.graded[d];
+    const counts = {};
+    qs.forEach(q => counts[q.f] = (counts[q.f] || 0) + 1);
+    const mix = FIELDS.map(f => `<span class="chip">${esc(f.name)} ${counts[f.key] || 0}</span>`).join("");
+    const answered = qs.filter(q => (state.answers[q.id] || "") !== "").length;
+    let html = `<div class="dayhead"><h2>${d}日目</h2><span class="meta">${graded ? "採点済み" : `回答 ${answered}/${qs.length}`}</span></div>
+      <div class="fieldmix">${mix}</div>`;
+    if (graded) {
+      const sc = dayScore(d);
+      html += `<div class="summary"><span class="note">この日の得点</span><span class="big">${sc} / ${qs.length}</span>
+        <span class="note">記述の言い回しが違うだけで内容が合っている場合は、各問の「正解にする」で直せます。分野別の結果は「診断結果」タブで見られます。</span></div>`;
+    }
+    html += `<ol class="qs">` + qs.map(q => renderQ(q, graded)).join("") + `</ol>`;
+    html += `<div class="actions" id="act-${d}">` + (graded
+      ? `<button class="btn" data-act="toresult">診断結果を見る</button><button class="btn ghost" data-act="reset" data-d="${d}">この日をやり直す</button>`
+      : `<button class="btn" data-act="grade" data-d="${d}">採点する</button><span class="note">未回答の問題は不正解として採点します。</span>`) + `</div>`;
+    view.innerHTML = html;
+  }
+
+  function renderQ(q, graded) {
+    const ans = state.answers[q.id] || "";
+    const ok = graded ? isCorrect(q) : null;
+    const cls = graded ? (ok ? "q ok" : "q ng") : "q";
+    let body;
+    if (q.c) {
+      body = `<div class="opts" role="radiogroup">` + q.c.map((c, i) => {
+        const k = KANA[i];
+        const picked = ans === k;
+        const right = graded && k === q.a;
+        return `<label class="opt${picked ? " picked" : ""}${right ? " right" : ""}"><input type="radio" name="r-${q.id}" id="r-${q.id}-${i}" value="${k}" ${picked ? "checked" : ""} ${graded ? "disabled" : ""}><span class="k">${k}</span><span>${esc(c)}</span></label>`;
+      }).join("") + `</div>`;
+    } else {
+      body = `<input type="text" id="t-${q.id}" data-id="${q.id}" value="${esc(ans)}" placeholder="答えを入力" autocomplete="off" ${graded ? "disabled" : ""}>`;
+    }
+    let fb = "";
+    if (graded) {
+      const ov = q.id in state.override;
+      const yours = ans === "" ? "（未回答）" : ans;
+      fb = `<div class="feedback"><div>あなたの答え：${esc(yours)}</div><div class="ans">正解：${esc(q.disp)}</div><div class="ex">${esc(q.ex)}</div>
+        <div class="override">${ov ? "手動で判定を変更済み" : "自動判定"}
+          ${ok ? `<button class="btn ghost small" data-act="ov" data-id="${q.id}" data-v="0">不正解にする</button>` : `<button class="btn ghost small" data-act="ov" data-id="${q.id}" data-v="1">正解にする</button>`}
+          ${ov ? `<button class="btn ghost small" data-act="ovclear" data-id="${q.id}">自動判定に戻す</button>` : ""}</div></div>`;
+    }
+    return `<li class="${cls}" id="q-${q.id}"><div class="qhead"><span class="qno">${q.day}-${String(q.no).padStart(2, "0")}</span><span class="chip">${esc(FNAME[q.f])}</span>${graded ? `<span class="mark" aria-label="${ok ? "正解" : "不正解"}">${ok ? "○" : "×"}</span>` : ""}</div>
+      <p class="qtext">${esc(q.q)}</p>${body}${fb}<div class="src">出典：${esc(q.src)}</div></li>`;
+  }
+
+  view.addEventListener("change", e => {
+    const t = e.target;
+    if (t.type === "radio") { state.answers[t.name.slice(2)] = t.value; save();
+      t.closest(".opts").querySelectorAll("label.opt").forEach(l => l.classList.toggle("picked", l.contains(t))); }
+  });
+  view.addEventListener("input", e => {
+    const t = e.target;
+    if (t.type === "text" && t.dataset.id) { state.answers[t.dataset.id] = t.value; save(); }
+  });
+  view.addEventListener("click", e => {
+    const b = e.target.closest("[data-act]"); if (!b) return;
+    const act = b.dataset.act;
+    if (act === "grade") { const d = +b.dataset.d; state.graded[d] = new Date().toISOString(); save(); render(); window.scrollTo(0, 0); }
+    else if (act === "toresult") go("result");
+    else if (act === "reset") {
+      const d = b.dataset.d;
+      const box = document.getElementById("act-" + d);
+      box.innerHTML = `<span class="confirm">${d}日目の回答と採点結果を消します。よろしいですか？</span>
+        <button class="btn" data-act="resetyes" data-d="${d}">消してやり直す</button><button class="btn ghost" data-act="resetno">やめる</button>`;
+    }
+    else if (act === "resetyes") {
+      const d = +b.dataset.d;
+      dayQs(d).forEach(q => { delete state.answers[q.id]; delete state.override[q.id]; });
+      delete state.graded[d]; save(); render(); window.scrollTo(0, 0);
+    }
+    else if (act === "resetno") render();
+    else if (act === "ov") { state.override[b.dataset.id] = b.dataset.v === "1"; save(); keepPos(b.dataset.id); }
+    else if (act === "ovclear") { delete state.override[b.dataset.id]; save(); keepPos(b.dataset.id); }
+    else if (act === "copy") {
+      const ta = document.getElementById("export");
+      const done = () => { const t = document.getElementById("copied"); if (t) t.textContent = "コピーしました"; };
+      try { navigator.clipboard.writeText(ta.value).then(done, () => { ta.select(); }); } catch (err) { ta.select(); }
+    }
+  });
+  function keepPos(id) {
+    const el = document.getElementById("q-" + id); const top = el ? el.getBoundingClientRect().top : 0;
+    render();
+    const el2 = document.getElementById("q-" + id); if (el2) window.scrollBy(0, el2.getBoundingClientRect().top - top);
+  }
+
+  function judge(p, n) {
+    if (n === 0) return `<span class="pill none">未採点</span>`;
+    if (p >= 80) return `<span class="pill good">得意</span>`;
+    if (p >= 60) return `<span class="pill mid">ふつう</span>`;
+    return `<span class="pill bad">要強化</span>`;
+  }
+
+  function renderResult() {
+    const gd = DAYS.filter(d => state.graded[d]);
+    const rows = FIELDS.map(f => {
+      const qs = QS.filter(q => q.f === f.key && state.graded[q.day]);
+      const c = qs.filter(isCorrect).length, n = qs.length;
+      const p = n ? Math.round(c / n * 100) : 0;
+      return { f, c, n, p };
+    });
+    const sorted = rows.slice().sort((a, b) => (b.n ? b.p : -1) - (a.n ? a.p : -1));
+    const tot = rows.reduce((s, r) => s + r.c, 0), totn = rows.reduce((s, r) => s + r.n, 0);
+    let html = `<div class="dayhead"><h2>診断結果</h2><span class="meta">採点済み ${gd.length}/${DAYS.length}日（${totn}問）</span></div>`;
+    if (!gd.length) {
+      html += `<div class="panel"><p class="note">まだ採点した日がありません。「1日目」タブで問題に答えて「採点する」を押すと、ここに分野別の正答率が表示されます。</p></div>`;
+    } else {
+      html += `<div class="summary"><span class="note">全体の正答率</span><span class="big">${Math.round(tot / totn * 100)}%</span><span class="note">${tot} / ${totn} 問正解${gd.length < DAYS.length ? "。採点した日が増えるほど判定が確かになります。" : ""}</span></div>`;
+      html += `<div class="panel"><h3>分野別の正答率（高い順）</h3><div class="tablewrap"><table>
+        <thead><tr><th>分野</th><th>正解</th><th>正答率</th><th style="width:30%">　</th><th>判定</th></tr></thead><tbody>` +
+        sorted.map(r => `<tr><td>${esc(r.f.name)}</td><td class="num">${r.c}/${r.n}</td><td class="num">${r.n ? r.p + "%" : "-"}</td>
+          <td><div class="bar" aria-hidden="true"><span class="t60" style="left:60%"></span><span class="t80" style="left:80%"></span><i style="width:${r.p}%"></i></div></td><td>${judge(r.p, r.n)}</td></tr>`).join("") +
+        `</tbody></table></div><p class="note">判定の目安：80%以上で得意、60〜79%でふつう、60%未満で要強化。縦線は60%と80%の位置です。</p></div>`;
+      html += `<div class="panel"><h3>日ごとの得点</h3><div class="tablewrap"><table><thead><tr><th>日</th><th>得点</th><th>採点日時</th></tr></thead><tbody>` +
+        DAYS.map(d => `<tr><td>${d}日目</td><td class="num">${state.graded[d] ? dayScore(d) + "/" + dayQs(d).length : "-"}</td><td class="num">${state.graded[d] ? new Date(state.graded[d]).toLocaleString("ja-JP", { dateStyle: "short", timeStyle: "short" }) : "未採点"}</td></tr>`).join("") +
+        `</tbody></table></div></div>`;
+      const wrong = QS.filter(q => state.graded[q.day] && !isCorrect(q));
+      const lines = ["科目B 得意分野診断の結果", `採点済み: ${gd.map(d => d + "日目").join("、")}（全体 ${tot}/${totn}）`, "",
+        ...sorted.map(r => `${r.f.name}: ${r.c}/${r.n}${r.n ? `（${r.p}%）` : ""}`), "",
+        "間違えた問題: " + (wrong.length ? wrong.map(q => `${q.day}-${String(q.no).padStart(2, "0")}(${FNAME[q.f]})`).join(", ") : "なし")];
+      html += `<div class="panel"><h3>結果のテキスト</h3><p class="note">回答はこのブラウザにだけ保存されます。別の端末やノートに控えておきたいときは、下のテキストをコピーしてください。</p>
+        <textarea id="export" readonly>${esc(lines.join("\n"))}</textarea><div class="actions"><button class="btn" data-act="copy">コピー</button><span class="toast" id="copied"></span></div></div>`;
+    }
+    view.innerHTML = html;
+  }
+
+  function renderKey() {
+    let html = `<div class="dayhead"><h2>解答一覧</h2><span class="meta">紙やノートで解く人向け</span></div>
+      <p class="note">問題を解き終えてから開いてください。記号選択の正解は、このページで表示している選択肢の並び順に対応しています。</p><div class="keylist">`;
+    for (const d of DAYS) {
+      html += `<details class="keyday panel"><summary>${d}日目の解答</summary><div class="tablewrap"><table><thead><tr><th>No</th><th>分野</th><th>正解</th><th>出典</th></tr></thead><tbody>` +
+        dayQs(d).map(q => `<tr><td class="num">${d}-${String(q.no).padStart(2, "0")}</td><td>${esc(FNAME[q.f])}</td><td>${esc(q.disp)}</td><td class="note">${esc(q.src)}</td></tr>`).join("") +
+        `</tbody></table></div></details>`;
+    }
+    view.innerHTML = html + `</div>`;
+  }
+
+  function render() {
+    renderTabs();
+    if (current === "result") renderResult();
+    else if (current === "key") renderKey();
+    else renderDay(+current.replace("day", "") || 1);
+  }
+  function fromHash() {
+    const h = (location.hash || "").slice(1);
+    current = /^(result|key)$/.test(h) || (/^day\d+$/.test(h) && DAYS.includes(+h.slice(3))) ? h : "day" + DAYS[0];
+  }
+  window.addEventListener("hashchange", () => { fromHash(); render(); });
+  fromHash(); render();
+})();
+</script>
+
+</body></html>

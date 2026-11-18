@@ -1,0 +1,3 @@
+# MkDocs 2.0 は Material と互換性がないため 1.x に固定する
+mkdocs>=1.6,<2
+mkdocs-material>=9.7,<10
